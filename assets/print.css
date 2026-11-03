@@ -1,0 +1,36 @@
+/* Druk: A4, marginesy 2,5 cm, bez ciemnego motywu */
+@page{size:A4;margin:2.5cm 2.5cm 2.2cm 2.5cm;@bottom-right{content:"strona " counter(page);font:8pt Calibri,Arial,sans-serif;color:#9BA4B4}@bottom-left{content:"Prestige Lingua  |  Vademecum Lektora 2026/27";font:8pt Calibri,Arial,sans-serif;color:#9BA4B4}}
+@page :first{@bottom-right{content:none}@bottom-left{content:none}}
+:root{color-scheme:light}
+html,body{background:#fff!important;color:#1C1C1E;font-size:11pt;line-height:1.35}
+body{font-family:Calibri,"Source Sans 3",Arial,sans-serif}
+.sheet{max-width:none;margin:0;padding:0}
+h1{font-size:14pt;color:#5B8FCE;margin:0 0 6pt;page-break-after:avoid}
+h2{font-size:12pt;margin:14pt 0 4pt;page-break-after:avoid}
+h3{font-size:11pt;color:#5B8FCE;margin:10pt 0 3pt;page-break-after:avoid}
+p,li{orphans:3;widows:3}
+.chap{margin:0;padding:0;border:0;break-before:page}
+.tw{overflow:visible}
+table{min-width:0;font-size:9.5pt;page-break-inside:auto}
+tr{page-break-inside:avoid}
+th{background:#5B8FCE!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+tr:nth-child(even) td{background:#EFF2F7!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.call{page-break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.call.confirm{background:#EFF2F7!important;border-left-color:#9BA4B4!important}
+.call.gold{background:#FAF6EE!important;border-left-color:#C9A84C!important}
+.call:not(.confirm):not(.gold){background:#EAF2FB!important;border-left-color:#5B8FCE!important}
+.cover{min-height:22cm;display:flex;flex-direction:column;justify-content:center}
+.cover .kicker{font:8pt Consolas,Menlo,monospace;letter-spacing:.06em;text-transform:uppercase;color:#5A6172}
+.cover h1{font-size:24pt;border-bottom:2pt solid #C9A84C;padding-bottom:8pt;margin:6pt 0 10pt}
+.cover .year{font-size:14pt}
+.cover .sub{color:#5A6172;margin-top:6pt}
+.stamp{border:1.5pt dashed #9BA4B4;padding:6pt 10pt;margin-top:18pt;font-size:10pt;color:#5A6172}
+.sign{break-before:page}
+.sign h1{margin-bottom:12pt}
+.sign p{max-width:none;font-size:11.5pt}
+.sign .line{border-bottom:1pt solid #1C1C1E;height:22pt;margin:6pt 0 2pt}
+.sign .cap{font-size:8.5pt;color:#5A6172;margin-bottom:12pt}
+.sign .row{display:grid;grid-template-columns:1fr 1fr;gap:24pt}
+.sign ul{list-style:none;padding:0;margin:10pt 0}
+.sign li{padding:3pt 0}
+.sign li::before{content:"☐  "}
