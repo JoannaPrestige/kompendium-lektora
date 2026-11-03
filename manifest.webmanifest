@@ -1,0 +1,22 @@
+{
+  "name": "Kompendium Lektora Prestige Lingua",
+  "short_name": "Kompendium",
+  "description": "Onboarding, Vademecum, Manual, Teacher Planner i narzędzia lektora Prestige Lingua.",
+  "lang": "pl",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#EEF1F6",
+  "theme_color": "#FFFFFF",
+  "icons": [
+    { "src": "assets/ikony/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/ikony/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/ikony/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Vademecum", "url": "./vademecum.html" },
+    { "name": "Manual", "url": "./manual.html" },
+    { "name": "Teacher Planner", "url": "./teacher-planner-2026-27.html" }
+  ]
+}
