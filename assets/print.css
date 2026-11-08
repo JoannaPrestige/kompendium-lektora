@@ -34,3 +34,20 @@ tr:nth-child(even) td{background:#EFF2F7!important;-webkit-print-color-adjust:ex
 .sign ul{list-style:none;padding:0;margin:10pt 0}
 .sign li{padding:3pt 0}
 .sign li::before{content:"☐  "}
+.back{display:none}
+/* Ekran: ta sama strona czytana w przeglądarce, nie na papierze */
+@media screen{
+html,body{background:#FAF6EE!important}
+.sheet{max-width:860px;margin:0 auto;padding:24px 40px 64px;background:#fff;box-shadow:0 0 0 1px #EFF2F7;overflow-x:hidden}
+.back{display:inline-block;margin:0 0 8px;font-size:14px;color:#5B8FCE;text-decoration:none}
+.back:hover{text-decoration:underline}
+.cover{min-height:0;padding:40px 0 32px}
+.chap{margin-top:48px;padding-top:24px;border-top:1px solid #EFF2F7}
+.sign{margin-top:48px;padding-top:24px;border-top:1px solid #EFF2F7}
+.sheet p{max-width:none}
+.tw{overflow-x:auto}
+}
+@media screen and (max-width:600px){
+.sheet{padding:16px 16px 48px}
+.cover h1{font-size:26px}
+}
