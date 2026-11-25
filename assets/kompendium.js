@@ -13,6 +13,24 @@
     return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
   }
 
+  // Na GitHubie każda strona to brama z zaszyfrowaną treścią. Odszyfrowujemy ją kluczem, który brama zapisała po podaniu hasła.
+  function jawna(t) {
+    var m = /<script type="application\/octet-stream" id="dane">([^<]+)<\/script>/.exec(t);
+    if (!m) return t;
+    var kh = null;
+    try { kh = sessionStorage.getItem("kompendium-lektora-klucz") || localStorage.getItem("kompendium-lektora-klucz"); } catch (e) {}
+    if (!kh || !window.crypto || !crypto.subtle) throw 0;
+    var raw = Uint8Array.from(atob(m[1].trim()), function (c) { return c.charCodeAt(0); }), k = new Uint8Array(kh.length / 2);
+    for (var i = 0; i < k.length; i++) k[i] = parseInt(kh.substr(i * 2, 2), 16);
+    return crypto.subtle.importKey("raw", k, "AES-CBC", false, ["decrypt"]).then(function (key) {
+      return crypto.subtle.decrypt({ name: "AES-CBC", iv: raw.slice(0, 16) }, key, raw.slice(16));
+    }).then(function (b) {
+      var s = new TextDecoder().decode(b);
+      if (s.indexOf("KL1:") !== 0) throw 0;
+      return s.slice(4);
+    });
+  }
+
   // Każdy nagłówek dostaje niepowtarzalną kotwicę. Ta sama funkcja działa na stronie i na stronie pobranej do wyszukiwania.
   function anchor(root) {
     var seen = {};
@@ -136,7 +154,7 @@
         waiting.push(cb);
         if (waiting.length > 1) return;
         Promise.all(PAGES.map(function (p) {
-          return fetch(p[0]).then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (t) {
+          return fetch(p[0]).then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(jawna).then(function (t) {
             var d = new DOMParser().parseFromString(t, "text/html"), m = d.querySelector("main.page");
             if (!m) return [];
             anchor(m);
