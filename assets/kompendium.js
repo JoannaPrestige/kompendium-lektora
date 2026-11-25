@@ -56,7 +56,7 @@
     });
     // spis treści na początku dokumentu powtarza wszystko, więc nie pokazujemy go w wynikach
     out = out.filter(function (s) { return !/^(co jest w|spis tresci)/.test(norm(s.title)); });
-    out.forEach(function (s) { s.n = norm(s.title + " " + s.text); s.nt = norm(s.text); });
+    out.forEach(function (s) { s.n = norm(s.title + " " + s.text); s.nt = norm(s.text); s.nh = norm(s.title); });
     return out;
   }
 
@@ -82,11 +82,14 @@
       t = setTimeout(function () {
         var raw = norm(input.value.trim());
         if (raw.length < 2) { res.innerHTML = ""; return; }
-        // polska odmiana: przy dłuższych słowach szukamy bez końcówki (zastępstwo znajdzie też zastępstwa)
-        var words = raw.split(/\s+/).map(function (w) { return w.length > 5 ? w.slice(0, -2) : w; });
+        // polska odmiana: szukamy bez końcówki (zastępstwo znajdzie też zastępstwa, sali znajdzie salę)
+        var words = raw.split(/\s+/).map(function (w) { return w.length > 5 ? w.slice(0, -2) : w.length > 3 ? w.slice(0, -1) : w; });
         var q = words[0];
         getIndex(function (idx) {
-          var hits = idx.filter(function (s) { return words.every(function (w) { return s.n.indexOf(w) >= 0; }); }).slice(0, 25);
+          var hits = idx.filter(function (s) { return words.every(function (w) { return s.n.indexOf(w) >= 0; }); });
+          // najpierw rozdziały, które mają szukane słowa w tytule
+          var inTitle = function (s) { return words.every(function (w) { return s.nh.indexOf(w) >= 0; }); };
+          hits = hits.filter(inTitle).concat(hits.filter(function (s) { return !inTitle(s); })).slice(0, 25);
           res.innerHTML = hits.length ? hits.map(function (s) {
             var where = s.page ? s.page + (s.chap && s.chap !== s.title ? ", " + s.chap : "") : (s.chap !== s.title ? s.chap : "");
             return '<a href="' + s.href + '"><b>' + esc(s.title) + "</b>" + (where ? "<small>" + esc(where) + "</small>" : "") +
